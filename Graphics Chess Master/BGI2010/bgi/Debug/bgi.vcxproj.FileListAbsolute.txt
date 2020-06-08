@@ -1,0 +1,2 @@
+D:\Graphics Chess Master\BGI2010\bgi\Debug\bgi.exe
+D:\Graphics Chess Master\BGI2010\bgi\Debug\bgi.pdb
