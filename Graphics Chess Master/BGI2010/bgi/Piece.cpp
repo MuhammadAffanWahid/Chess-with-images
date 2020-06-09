@@ -8,6 +8,7 @@ Piece::Piece(Position p, Color c, Board* b) :P(p), C(c)
 
 void Piece::Move(Position EP)
 {
+
 	Position T = P;
 
 	P = EP;

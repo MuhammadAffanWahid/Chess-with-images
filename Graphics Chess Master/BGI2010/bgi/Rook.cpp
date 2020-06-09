@@ -11,16 +11,18 @@ Rook::Rook(Position p, Color c, Board* b) :
 bool Rook::isLegel(Position EP)
 {
 	
-	return (IsHorizonMove(P, EP) && IsHorizonPathClear(P, EP, B)) || (IsVerticalMove(P, EP), IsVerticalPathClear(P, EP, B));
+	return (IsHorizonMove(P, EP) && IsHorizonPathClear(P, EP, B)) 
+									||
+		    (IsVerticalMove(P, EP) && IsVerticalPathClear(P, EP, B));
 
 }
 
 void Rook::Draw()
 {
-	int x = P.ci * 100;
-	int y = P.ri * 100;
-	int a = (P.ci + 1) * 100;
-	int b = (P.ri + 1) * 100;
+	int x = P.ci * 75;
+	int y = P.ri * 75;
+	int a = (P.ci + 1) * 75;
+	int b = (P.ri + 1) * 75;
 
 	if (C == White)
 	{
@@ -29,13 +31,13 @@ void Rook::Draw()
 		if ((P.ri + P.ci) % 2 == 0)
 		{
 
-			readimagefile("img/WRL.jpg", x + 10, y + 10, a - 10, b - 10);
+			readimagefile("img/WRL.jpg", x + 5, y + 5, a - 5, b - 5);
 
 		}
 
 		else
 		{
-			readimagefile("img/WRD.jpg", x + 10, y + 10, a - 10, b - 10);
+			readimagefile("img/WRD.jpg", x + 5, y + 5, a - 5, b - 5);
 		}
 	}
 	else
@@ -46,14 +48,14 @@ void Rook::Draw()
 		if ((P.ri + P.ci) % 2 == 0)
 		{
 
-			readimagefile("img/DRL.jpg", x + 10, y + 10, a - 10, b - 10);
+			readimagefile("img/DRL.jpg", x + 5, y + 5, a - 5, b - 5);
 
 		}
 
 		else
 		{
 
-			readimagefile("img/DRD.jpg", x + 10, y + 10, a - 10, b - 10);
+			readimagefile("img/DRD.jpg", x + 5, y + 5, a - 5, b - 5);
 		}
 	}
 }

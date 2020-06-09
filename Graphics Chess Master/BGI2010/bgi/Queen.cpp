@@ -19,22 +19,22 @@ bool Queen::isLegel(Position EP)
 
 void Queen::Draw()
 {
-	int x = P.ci * 100;
-	int y = P.ri * 100;
-	int a = (P.ci + 1) * 100;
-	int b = (P.ri + 1) * 100;
+	int x = P.ci * 75;
+	int y = P.ri * 75;
+	int a = (P.ci + 1) * 75;
+	int b = (P.ri + 1) * 75;
 	if (C == White)
 	{
 		if ((P.ri + P.ci) % 2 == 0)
 		{
 
-			readimagefile("img/WQL.jpg", x + 10, y + 10, a - 10, b - 10);
+			readimagefile("img/WQL.jpg", x+7 , y+7 , a-7 , b-7 );
 
 		}
 
 		else
 		{
-			readimagefile("img/WQD.jpg", x + 10, y + 10, a - 10, b - 10);
+			readimagefile("img/WQD.jpg", x + 7, y + 7, a - 7, b - 7);
 		}
 
 		cout << "r";
@@ -46,13 +46,13 @@ void Queen::Draw()
 		if ((P.ri + P.ci) % 2 == 0)
 		{
 
-			readimagefile("img/DQL.jpg", x + 10, y + 10, a - 10, b - 10);
+			readimagefile("img/DQL.jpg", x + 6.5, y + 6.5, a - 6.5, b - 6.5);
 
 		}
 
 		else
 		{
-			readimagefile("img/DQD.jpg", x + 10, y + 10, a - 10, b - 10);
+			readimagefile("img/DQD.jpg", x + 6.5, y + 6.5, a - 6.5, b - 6.5);
 		}
 	}
 

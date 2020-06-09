@@ -28,5 +28,7 @@ public:
 	bool IsValidSelection();
 	bool IsValidDestination();
 	void Play();
+	void getRowColbyLeftClick(int & , int &);
+	void DisplayMove(Position s , Position e);
 };
 

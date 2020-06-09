@@ -13,10 +13,10 @@ public:
 	void Move(Position EP);
 	virtual void Draw()
 	{
-		int x = P.ci * 100;
-		int y = P.ri * 100;
-		int a = (P.ci + 1) * 100;
-		int b = (P.ri + 1) * 100;
+		int x = P.ci * 75;
+		int y = P.ri * 75;
+		int a = (P.ci + 1) * 75;
+		int b = (P.ri + 1) * 75;
 
 		if (C == White)
 		{
@@ -28,13 +28,13 @@ public:
 				if ((P.ri + P.ci) % 2 == 0)
 				{
 					
-					readimagefile("img/WHL.jpg", x + 10, y + 10, a - 10, b - 10);
+					readimagefile("img/WHL.jpg", x + 5, y + 5, a - 5, b - 5);
 
 				}
 
 				else
 				{
-					readimagefile("img/WHD.jpg", x + 10, y + 10, a - 10, b - 10);
+					readimagefile("img/WHD.jpg", x + 5, y + 5, a - 5, b - 5);
 				}
 
 			
@@ -47,13 +47,13 @@ public:
 				if ((P.ri + P.ci) % 2 == 0)
 				{
 				
-					readimagefile("img/DHL.jpg", x + 10, y + 10, a - 10, b - 10);
+					readimagefile("img/DHL.jpg", x + 5, y + 5, a - 5, b - 5);
 
 				}
 
 				else
 				{
-					readimagefile("img/DHD.jpg", x + 10, y + 10, a - 10, b - 10);
+					readimagefile("img/DHD.jpg", x + 5, y + 5, a - 5, b - 5);
 				}
 			
 		}
