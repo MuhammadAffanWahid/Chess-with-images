@@ -193,36 +193,36 @@ void Board::TurnChange()
 
 void Board::SelectPiece()
 {
-	/*do
+	do
 	{
 		
 	} while (!ismouseclick(WM_LBUTTONDOWN));
 	getmouseclick(WM_LBUTTONDOWN, S.ci, S.ri);
 	Beep(1023, 50);
-	S.ci = S.ci / 100;
-	S.ri = S.ri / 100;*/
+	S.ci = S.ci / 75;
+	S.ri = S.ri / 75;
 	//cin >> S.ri >> S.ci;
-	getRowColbyLeftClick(S.ri, S.ci);
+	//getRowColbyLeftClick(S.ri, S.ci);
 }
 
 void Board::SelectDestination()
 {
-	/*do
+	do
 	{
 
 	} while (!ismouseclick(WM_LBUTTONDOWN));
 	getmouseclick(WM_LBUTTONDOWN, E.ci, E.ri);
 	Beep(2023, 50);
-	E.ci = E.ci / 100;
-	E.ri = E.ri / 100;*/
+	E.ci = E.ci / 75;
+	E.ri = E.ri / 75;
 	//cin >> E.ri >> E.ci;
-	getRowColbyLeftClick(E.ri, E.ci);
+	//getRowColbyLeftClick(E.ri, E.ci);
 }
 bool Board::IsValidDestination()
 {
 	if (S.ri < 0 || S.ri>7 || S.ci < 0 || S.ci>7)
 		return false;
-	return (B[E.ri][E.ci] == nullptr || B[S.ri][S.ci]->getColor() != Turn);
+	return (B[E.ri][E.ci] == nullptr || B[E.ri][E.ci]->getColor() != Turn);
 
 }
 
@@ -259,14 +259,27 @@ void Board::Highlight()
 			int a = (E.ci + 1) * 75;
 			int b = (E.ri + 1) * 75;
 
-			if (IsValidDestination() && B[S.ri][S.ci]->isLegel(E))
+			
+
+		    if (IsValidDestination() && B[S.ri][S.ci]->isLegel(E))
 			{
 				setcolor(GREEN);
 				circle(x + 37.5, y + 37.5, 10);
 				setfillstyle(SOLID_FILL, GREEN);
 				floodfill(x + 37.5, y + 37.5, GREEN);
-				HL[E.ri][E.ci] = '*';
+
+				HL[E.ri][E.ci] = '*';	
 			}
+			if (IsValidDestination() && B[E.ri][E.ci] != nullptr && B[S.ri][S.ci]->isLegel(E)&& B[E.ri][E.ci]->getColor() != Turn )
+			{
+			setcolor(RED);
+			circle(x + 37.5, y + 37.5, 10);
+			setfillstyle(SOLID_FILL, RED);
+			floodfill(x + 37.5, y + 37.5, RED);
+
+			HL[E.ri][E.ci] = '*';
+			}
+			
 			else
 			{
 				HL[E.ri][E.ci] = ' ';
@@ -303,6 +316,7 @@ void Board::UnHighlight()
 			}
 		}
 	}
+
 }
 
 
@@ -333,7 +347,11 @@ void Board::Play()
 
 
 			if (IsValidDestination() == false)
+			{
 				cout << "\n Invalid Destination ............\n";
+				UnHighlight();
+
+			}
 
 
 
