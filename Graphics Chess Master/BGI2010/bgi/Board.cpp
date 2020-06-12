@@ -127,6 +127,53 @@ void Board::Init()
 
 }
 
+Position Board::KingPos()
+{
+	King* k;
+	Position pos(-1, -1);
+	for (int i = 0;i < 8;i++)
+	{
+		for (int j = 0;j < 8;j++)
+		{
+			if (B[i][j] != nullptr && Turn == B[i][j]->getColor())
+			{
+				k = dynamic_cast<King*>(B[i][j]);
+				if (k == B[i][j])
+				{
+					Position Posi(i, j);
+					return Posi;
+				}
+			}
+		
+		}
+	}
+	return pos;
+}
+
+bool Board::IsCheck()
+{
+	Position Ptemp;
+	Ptemp = KingPos();
+	E.ri = Ptemp.ri;
+	E.ci = Ptemp.ci;
+	TurnChange();
+	for (int R = 0; R < 8; R++)
+	{
+		for (int C = 0; C < 8; C++)
+		{
+			S.ri = R;
+			S.ci = C;
+			if (IsValidSelection() && IsValidDestination() && B[S.ri][S.ci]->isLegel(E))///////////////////////
+			{
+				TurnChange();
+				return true;
+			}
+		}
+	}
+	TurnChange();
+	return false;
+}
+
 void Board::PrintBoard()
 {
 	system("cls");
