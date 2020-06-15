@@ -8,14 +8,7 @@ Rook::Rook()
 Rook::Rook(Position p, Color c, Board* b) :
 	Piece(p, c, b) {}
 
-bool Rook::isLegel(Position EP)
-{
-	
-	return (IsHorizonMove(P, EP) && IsHorizonPathClear(P, EP, B)) 
-									||
-		    (IsVerticalMove(P, EP) && IsVerticalPathClear(P, EP, B));
 
-}
 
 void Rook::Draw()
 {

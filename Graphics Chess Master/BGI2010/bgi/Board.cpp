@@ -1,9 +1,5 @@
 #include "Board.h"
-#include "Rook.h"
-#include "Horse.h"
-#include "Bishop.h"
-#include "King.h"
-#include "Queen.h"
+//#include "Pawn.h"
 #include "graphics.h"
 ///////////////
 void Board::getRowColbyLeftClick(int& rpos, int& cpos)
@@ -36,8 +32,7 @@ void Board::DisplayMove(Position s , Position e)
 /////////
 Board::Board()
 {
-	Init();
-	Turn = White;
+	
 }
 
 void Board::Init()
@@ -56,7 +51,7 @@ void Board::Init()
 				B[ri][ci] = new	Pawn(Position(ri, ci), Black, this);
 			}
 			//Rook Piece
-			else if ((ri == 0 && ci == 0) || (ri == 0 && ci == 7))
+			 if ((ri == 0 && ci == 0) || (ri == 0 && ci == 7))
 			{
 				B[ri][ci] = new	Rook(Position(ri, ci), White, this);
 
@@ -94,24 +89,24 @@ void Board::Init()
 			}
 
 			//Queen Piece
-			else if (ri == 0 && ci == 3)
+			else if (ri == 0 && ci == 4)
 			{
 				B[ri][ci] = new	Queen(Position(ri, ci), White, this);
 
 			}
-			else if (ri == 7 && ci == 3)
+			else if (ri == 7 && ci == 4)
 			{
 				B[ri][ci] = new	Queen(Position(ri, ci), Black, this);
 
 			}
 
 			//King Piece
-			else if (ri == 0 && ci == 4)
+			else if (ri == 0 && ci == 3)
 			{
 				B[ri][ci] = new	King(Position(ri, ci), White, this);
 
 			}
-			else if (ri == 7 && ci == 4)
+			else if (ri == 7 && ci == 3)
 			{
 				B[ri][ci] = new	King(Position(ri, ci), Black, this);
 			}
@@ -173,6 +168,67 @@ bool Board::IsCheck()
 	TurnChange();
 	return false;
 }
+
+
+bool Board::IsCheckAfterMove()
+{
+	bool Is = false; //
+	Piece* SP;
+	Position TS = S;
+	Position TE = E;
+
+	SP = B[E.ri][E.ci];
+	B[S.ri][S.ci]->Move(E);
+	if (IsCheck())  Is = true; 
+	S = TS;
+	E = TE;
+
+
+	B[E.ri][E.ci]->P.ri = S.ri; //->ChangePos(S.ri, S.ci);
+	B[E.ri][E.ci]->P.ci = S.ci;
+
+	B[S.ri][S.ci] = B[E.ri][E.ci];
+	B[E.ri][E.ci] = SP;
+	return Is;
+}
+
+bool Board::IsStaleMate()
+{
+	for (int Sr = 0; Sr < 8; Sr++)
+	{
+		for (int Sc = 0; Sc < 8; Sc++)
+		{
+			S.ri = Sr;
+			S.ci = Sc;
+
+			if (IsValidSelection())
+			{
+				for (int Er = 0; Er < 8; Er++)
+				{
+					for (int Ec = 0; Ec < 8; Ec++)
+					{
+						E.ri = Er;
+						E.ci = Ec;
+						if (IsValidDestination() && B[S.ri][S.ci]->isLegel(E, false, true))
+						{
+							return false;
+						}
+					}
+				}
+			}
+		}
+	}
+	return true;
+}
+
+bool Board::IsCheckMate()
+{
+	if (!IsCheck())
+		return false;
+	return IsStaleMate();
+}
+
+
 
 void Board::PrintBoard()
 {
@@ -308,7 +364,7 @@ void Board::Highlight()
 
 			
 
-		    if (IsValidDestination() && B[S.ri][S.ci]->isLegel(E))
+		    if (IsValidDestination() && B[S.ri][S.ci]->isLegel(E, false, true))
 			{
 				setcolor(GREEN);
 				circle(x + 37.5, y + 37.5, 10);
@@ -317,7 +373,7 @@ void Board::Highlight()
 
 				HL[E.ri][E.ci] = '*';	
 			}
-			if (IsValidDestination() && B[E.ri][E.ci] != nullptr && B[S.ri][S.ci]->isLegel(E)&& B[E.ri][E.ci]->getColor() != Turn )
+			if (IsValidDestination() && B[E.ri][E.ci] != nullptr && B[S.ri][S.ci]->isLegel(E, false, true)  &&  B[E.ri][E.ci]->getColor() != Turn )
 			{
 			setcolor(RED);
 			circle(x + 37.5, y + 37.5, 10);
@@ -404,9 +460,9 @@ void Board::Play()
 
 		} while (IsValidDestination() == false);
 
-		if (B[S.ri][S.ci]->isLegel(E))
+		if (B[S.ri][S.ci]->isLegel(E, false, true))
 		{
-			B[S.ri][S.ci]->Move(E);
+			B[S.ri][S.ci]->Move(E, true);
 			//DisplayMove( S,  E);
 
 			UnHighlight();

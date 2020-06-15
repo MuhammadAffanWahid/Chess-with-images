@@ -6,11 +6,12 @@ public:
 	King();
 	King(Position p, Color c, Board* b) :
 		Piece(p, c, b) {}
-	virtual bool isLegel(Position EP)
+	virtual bool isLegel(Position EP, bool IsRealMove = false, bool SelfCheck = false)
 	{
+		if (SelfCheck && Brd->IsCheckAfterMove())
+			return false;
 		return !(abs(EP.ri - P.ri) > 1 || abs(EP.ci - P.ci) > 1);
 	}
-	void Move(Position EP);
 	virtual void Draw()
 	{
 		int x = P.ci * 75;

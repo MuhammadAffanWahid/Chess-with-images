@@ -1,15 +1,19 @@
 #pragma once
 #include "Piece.h"
+
 class Bishop : public Piece
 {
 public:
 	Bishop();
 	Bishop(Position p, Color c, Board* b) :
 		Piece(p, c, b) {}
-	virtual bool isLegel(Position EP)
+	virtual bool isLegel(Position EP, bool IsRealMove = false, bool SelfCheck = false)
 	{
+				
+		if (SelfCheck && Brd->IsCheckAfterMove())
+		return false;
 		//return true;
-		return (IsDiagonalMove(P, EP) && IsDiagonalPathClear(P, EP, B));
+		return (IsDiagonalMove(P, EP) && IsDiagonalPathClear(P, EP, Brd));
 	}
 	void Move(Position EP);
 	virtual void Draw()

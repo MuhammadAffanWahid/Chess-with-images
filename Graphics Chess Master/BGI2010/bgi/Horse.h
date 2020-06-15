@@ -6,11 +6,13 @@ public:
 	Horse();
 	Horse(Position p, Color c, Board* b) :
 		Piece(p, c, b) {}
-	virtual bool isLegel(Position EP)
+	virtual bool isLegel(Position EP, bool IsRealMove = false, bool SelfCheck = false )
+
 	{
+		if (SelfCheck && Brd->IsCheckAfterMove())
+			return false;
 		return  (((abs(P.ri - EP.ri) == 2) && (abs(P.ci - EP.ci) == 1)) || ((abs(P.ri - EP.ri) == 1) && (abs(P.ci - EP.ci) == 2)));
 	}
-	void Move(Position EP);
 	virtual void Draw()
 	{
 		int x = P.ci * 75;

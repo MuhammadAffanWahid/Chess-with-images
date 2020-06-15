@@ -2,7 +2,7 @@
 #pragma once
 #include "Position.h"
 #include "graphics.h"
-
+//#include"Board.h"
 #include <iostream>
 using namespace std;
 
@@ -14,10 +14,11 @@ class Board;
 
 class Piece
 {
-protected:
-	Color C;
-	Position P;
-	Board* B;
+public:
+
+
+	friend class Board;
+	Board* Brd;
 
 	static bool IsHorizonMove(Position S, Position E);
 
@@ -29,17 +30,21 @@ protected:
 	static bool IsVerticalPathClear(Position S, Position E, Board* B);
 
 	static bool IsDiagonalPathClear(Position S, Position E, Board* B);
-public:
+//public:
+
+	Position P;
+	Color C;
+
 	Piece() {
 	}
 	Piece(Position p, Color c, Board* b);
-	virtual bool isLegel(Position EP) = 0;
-	void Move(Position EP);
+	virtual bool isLegel(Position EP, bool IsRealMove = false, bool SelfCheck = false) = 0;
+	void Move(Position EP, bool IsReal = false);
 	virtual void Draw() = 0;
 	Color getColor();
 	virtual void unDraw() = 0;
 
 
-	~Piece();
+	//~Piece();
 };
 

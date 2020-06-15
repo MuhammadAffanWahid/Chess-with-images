@@ -4,13 +4,21 @@ class Pawn :public Piece
 {
 
 public:
+	/*Pawn()
+	{
+
+	}*/
 	Pawn(Position p, Color c, Board* b) :
 		Piece(p, c, b) {}
-	virtual bool isLegel(Position EP)
+	virtual bool isLegel(Position EP, bool IsRealMove = false, bool SelfCheck = false)
+
 	{
+		if (SelfCheck && Brd->IsCheckAfterMove())
+			return false;
+
 		if (P.ri == 6 || P.ri == 1)
 		{
-			if (IsVerticalMove(P, EP) && IsVerticalPathClear(P, EP, B))
+			if (IsVerticalMove(P, EP) && IsVerticalPathClear(P, EP, Brd))
 			{
 				if (abs(EP.ri - P.ri) > 2)
 					return false;
@@ -23,7 +31,7 @@ public:
 
 		else {
 
-			if (IsVerticalMove(P, EP) && IsVerticalPathClear(P, EP, B))
+			if (IsVerticalMove(P, EP) && IsVerticalPathClear(P, EP, Brd))
 			{
 				if (C == White)
 				{
@@ -48,62 +56,32 @@ public:
 
 		}
 
-		//int dr = EP.ri - P.ri;
-		//int dc = EP.ci - P.ci;
-
-		//if (abs(dc) == 0 && B->B[EP.ri][EP.ci] != nullptr) //affan
-		//	return false;
-
-		//if (C == WHITE)
-		//{
-		//	if (dr < 0 || abs(dr) > 2)
-		//		return false;
-		//	if (abs(dc) > 1)
-		//		return false;
-		//	if (abs(dr) == 2 && (P.ri != 1 || dc != 0))
-		//		return false;
-		//	if (!IsVerticalPathClear(P, EP, B))
-		//		return false;
-		//	if (dr == 0 && dc != 0)
-		//		return 0;
-		//	if (IsDiagonalMove(P, EP))
-		//	{
-
-		//		if (P.ci != 0 && P.ri != 0 && Brd->IsEnemyPiece(EP))
-		//			return 1;
-		//		else if (P.ci != 7 && P.ri != 0 && Brd->IsEnemyPiece(EP))
-		//			return 1;
-		//		else
-		//			return false;
-		//	}
-		//}
-		//else
-		//{
-		//	if (dr > 0 || abs(dr) > 2)
-		//		return false;
-		//	if (abs(dc) > 1)
-		//		return false;
-		//	if (!IsVerticlePathClear(P, EP, Brd))
-		//		return false;
-		//	if (abs(dr) == 2 && (P.ri != 6 || dc != 0))
-		//		return false;
-		//	if (dr == 0 && dc != 0)
-		//		return 0;
-		//}
-
-		//if (IsDiagonalMove(P, EP))
-		//{
-		//	if (P.ci != 7 && P.ri != 7 && Brd->IsEnemyPiece(EP))
-		//		return 1;
-		//	else if (P.ci != 0 && P.ri != 0 && Brd->IsEnemyPiece(EP))
-		//		return 1;
-		//	else
-		//		return false;
-		//}
-		//return true;
-
 	}
-	void Move(Position EP);
+	void Move(Position EP, bool IsReal = false)
+	{
+		if (IsReal)
+		{
+			if ((C == WHITE && EP.ri == 7) || (C == BLACK && EP.ri == 0))
+			{
+				Position T = P;
+				P = EP;
+				Brd->Move(T, EP);
+				//Brd->B[P.ri][P.ci] = new Queen(P, C, Brd);
+			}
+			else
+			{
+				Position T = P;
+				P = EP;
+				Brd->Move(T, EP);
+			}
+		}
+		else
+		{
+			Position T = P;
+			P = EP;
+			Brd->Move(T, EP);
+		}
+	}
 	virtual void Draw()
 	{
 		int x = P.ci * 75;

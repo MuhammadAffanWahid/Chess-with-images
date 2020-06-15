@@ -8,8 +8,8 @@ public:
 
 	Queen(Position p, Color c, Board* b);
 
-	virtual bool isLegel(Position EP);
-	void Move(Position EP);
+	virtual bool isLegel(Position EP, bool IsRealMove = false, bool SelfCheck = false);
+
 	virtual void Draw();
 	virtual void unDraw();
 	~Queen();

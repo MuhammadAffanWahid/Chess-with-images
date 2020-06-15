@@ -3,16 +3,16 @@
 
 Piece::Piece(Position p, Color c, Board* b) :P(p), C(c)
 {
-	B = b;
+	Brd = b;
 }
 
-void Piece::Move(Position EP)
+void Piece::Move(Position EP , bool IsReal)
 {
 
 	Position T = P;
 
 	P = EP;
-	B->Move(T, EP);
+	Brd->Move(T, EP);
 }
 
 Color Piece::getColor()
@@ -151,7 +151,7 @@ bool Piece::IsDiagonalPathClear(Position S, Position E, Board* B)
 	
 }
 
-Piece::~Piece()
-{
-
-}
+//Piece::~Piece()
+//{
+//
+//}
